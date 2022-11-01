@@ -18,21 +18,19 @@ function App() {
       setError("Digite um CEP");
     } else {
       setLoading(true);
-      setTimeout(
-        () =>
-          axios
-            .get(url)
-            .then((resp) => {
-              setCepDetails(resp.data);
-            })
-            .catch((error) => {
-              setError(
-                `Ocorreu um erro (${error.message})! Verifique o CEP informado.`
-              );
-            })
-            .finally(() => setLoading(false)),
-        1000
-      );
+      axios
+        .get(url)
+        .then((resp) => {
+          setCepDetails(resp.data);
+          clearError();
+        })
+        .catch((error) => {
+          setError(
+            `Ocorreu um erro (${error.message})! Verifique o CEP informado.`
+          );
+          setCep("");
+        })
+        .finally(() => setLoading(false));
     }
   };
 
